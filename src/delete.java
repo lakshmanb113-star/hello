@@ -1,7 +1,8 @@
 import java.sql.*;
 
-public class up{
+public class delete {
     public static void main(String[] args) {
+
         try {
             // Load MySQL JDBC Driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -15,24 +16,24 @@ public class up{
 
             System.out.println("Connection Successful!");
 
-            // Create PreparedStatement
+            // Create PreparedStatement for DELETE
             PreparedStatement ps = con.prepareStatement(
-                    "update stu set marks=? where rollno=?");
+                    "DELETE FROM stu WHERE rollno = ?"
+            );
 
+            // Set rollno to delete
+            ps.setInt(1, 5);
 
-            // Set values
-            ps.setInt(1,5);
-
-            ps.setInt(2, 3);
-
-            // Execute query only once
+            // Execute DELETE query
             int rows = ps.executeUpdate();
 
             if (rows > 0) {
-                System.out.println("Row inserted successfully");
+                System.out.println("Row deleted successfully");
+            } else {
+                System.out.println("No student found with rollno 5");
             }
 
-            // Close connection
+            // Close resources
             ps.close();
             con.close();
 
